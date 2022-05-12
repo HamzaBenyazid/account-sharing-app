@@ -1,4 +1,6 @@
 package com.winchesters.accountsharingapp.model.subscription.spotify;
 
-public abstract class SpotifySubscription {
+import com.winchesters.accountsharingapp.model.subscription.Subscription;
+
+public abstract class SpotifySubscription implements Subscription {
 }
