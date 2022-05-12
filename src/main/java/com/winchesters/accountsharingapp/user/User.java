@@ -2,6 +2,7 @@ package com.winchesters.accountsharingapp.user;
 
 
 import com.winchesters.accountsharingapp.offer.Offer;
+import com.winchesters.accountsharingapp.security.ApplicationUserRole;
 import com.winchesters.accountsharingapp.subscription.Subscription;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,6 +32,7 @@ public class User {
     private Boolean verified;
     private Date birth_date;
     private Date creation_date;
+    private ApplicationUserRole role;
 
     @OneToMany(mappedBy="creator", fetch = FetchType.LAZY)
     private List<Offer> offerings;
