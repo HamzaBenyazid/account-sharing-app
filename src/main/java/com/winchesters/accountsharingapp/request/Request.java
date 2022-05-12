@@ -2,12 +2,18 @@ package com.winchesters.accountsharingapp.request;
 
 import com.winchesters.accountsharingapp.offer.Offer;
 import com.winchesters.accountsharingapp.user.User;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table
+@Setter
+@Getter
+@NoArgsConstructor
 public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
