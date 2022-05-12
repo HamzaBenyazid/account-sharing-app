@@ -10,15 +10,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table
-public class Account {
+public abstract class Account {
 
     @Id
     private Long id;
-
     @Embedded
     private Subscription subscription;
 

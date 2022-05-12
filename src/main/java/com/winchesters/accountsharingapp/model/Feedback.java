@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table
-public class feedback {
+public class Feedback {
     @Id
     private long id;
 

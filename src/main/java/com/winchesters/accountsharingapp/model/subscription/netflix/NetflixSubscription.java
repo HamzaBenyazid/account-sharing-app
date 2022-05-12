@@ -2,9 +2,11 @@ package com.winchesters.accountsharingapp.model.subscription.netflix;
 
 import com.winchesters.accountsharingapp.model.subscription.Subscription;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 
 @AllArgsConstructor
+@Getter
 public abstract class NetflixSubscription implements Subscription {
     private Boolean hdAvailable;
     private Boolean uhdAvailable;
@@ -21,15 +23,4 @@ public abstract class NetflixSubscription implements Subscription {
         return this.screens;
     }
 
-    public Boolean getHdAvailable() {
-        return hdAvailable;
-    }
-
-    public Boolean getUhdAvailable() {
-        return uhdAvailable;
-    }
-
-    public Integer getScreens() {
-        return screens;
-    }
 }
