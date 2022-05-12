@@ -1,0 +1,62 @@
+user:
+  - private long id;
+  - private String firstName;
+  - private String lastName;
+  - private Date birth_date;
+  - private String email;
+  - private String password;
+  - private boolean is_verified;
+  - private Date creation_date
+
+AbstractAccount:
+  - protected subsciption_type;
+  --owner
+
+NetflixAccount extends AbstractAccount:
+  - subscription_type
+  - private expiryDate
+
+
+interface subsciption_type:
+  - protected Service service;  // netflix,spotify...
+  - getPrice();
+  - getMaxUsers();
+ # - getCredentialsObject();
+
+NetflixSubsciption implements subsciption_type:
+
+Spotifysubsciption implements subsciption_type:
+
+Offer:
+  -private Long id
+  -private Date OfferDate
+  -private Double calculatedPrice
+  -private Integer maxSpliters
+  -private List<User> spliters
+-private Boolean type  //private or public
+  --account
+  --offerer
+  --requests
+
+Order/request:
+  -private Long id
+  -private Date requestDate
+  -private RequestStatus status
+  -private Date nextPaymentDate
+  --requester
+  --offer
+  --payments
+
+Payment:
+  -private Long id
+  -private Double total
+  -private Date paymentDate
+  --payer
+  --order
+
+feedback:
+  - private long id;
+  - private Rating rating;
+  - private String description;
+  --rater
+  --rated
