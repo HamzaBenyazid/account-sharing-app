@@ -1,5 +1,6 @@
 package com.winchesters.accountsharingapp.offer;
 
+import com.winchesters.accountsharingapp.account.AccountProvider;
 import com.winchesters.accountsharingapp.exception.offer.OfferNotEmptyException;
 import com.winchesters.accountsharingapp.exception.offer.OfferNotFoundException;
 import com.winchesters.accountsharingapp.user.UserService;
@@ -21,6 +22,7 @@ public class OfferService implements OfferServiceInterface {
 
     @Override
     public void createOffer(Offer offer) {
+        //todo : set calculatedProce
         offer.setOfferer(userService.getUser());
         offerRepository.save(offer);
     }
@@ -39,6 +41,23 @@ public class OfferService implements OfferServiceInterface {
     }
 
     @Override
+    public Page<Offer> getByCalculatedPriceAndAccount_Provider(Double calculatedPrice, AccountProvider provider, int pageNumber, int pageSize) {
+        Pageable sortedByDate = PageRequest.of(pageNumber - 1, pageSize, Sort.by("uploadDate").descending());
+        return offerRepository.findByCalculatedPriceAndAccount_Provider(calculatedPrice,provider,sortedByDate);
+    }
+
+    @Override
+    @Transactional
+    public void updateMaxSplitters(Long offerId, Integer maxSplitters) {
+        Offer offer = offerRepository.findById(offerId)
+                .orElseThrow(() -> new IllegalStateException("offer with id : "+offerId+" not found"));
+        if(maxSplitters!=null && offer.getAccount().getSubscription().getMaxUsers()>= maxSplitters){
+            offer.setMaxSplitters(maxSplitters);
+        }
+
+    }
+
+    @Override
     public void deteteOffer(Long offerId) {
         Offer offer = offerRepository.findById(offerId)
                 .orElseThrow(() -> new IllegalStateException("offer not found"));
@@ -54,4 +73,6 @@ public class OfferService implements OfferServiceInterface {
         Pageable sortedByDate = PageRequest.of(pageNumber - 1, pageSize, Sort.by("uploadDate").descending());
         return offerRepository.findAll(sortedByDate);
     }
+
+
 }
