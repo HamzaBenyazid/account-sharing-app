@@ -22,8 +22,11 @@ public class OfferService implements OfferServiceInterface {
 
     @Override
     public void createOffer(Offer offer) {
-        //todo : set calculatedProce
+        java.sql.Date date = new java.sql.Date(new java.util.Date().getTime());
+        Double calculatedPrice = offer.getAccount().getSubscription().getPrice() /offer.getMaxSplitters();
+        offer.setCalculatedPrice(calculatedPrice);
         offer.setOfferer(userService.getUser());
+        offer.setUploadDate(date);
         offerRepository.save(offer);
     }
 
