@@ -1,5 +1,6 @@
 package com.winchesters.accountsharingapp.account;
 
+import com.winchesters.accountsharingapp.offer.Offer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

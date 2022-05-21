@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 public class SubscriptionService {
 
     private final Logger Log = LoggerFactory.getLogger(SubscriptionService.class);
-//    private final SubscriptionFactory subscriptionFactory;
 
     public final Subscription createSubscription(Account account,String type){
         return account.getSubscriptionFactory().createSubscription(type);
