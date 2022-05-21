@@ -1,6 +1,7 @@
 package com.winchesters.accountsharingapp.account;
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import com.winchesters.accountsharingapp.offer.Offer;
 import com.winchesters.accountsharingapp.subscription.Subscription;
 import com.winchesters.accountsharingapp.subscription.SubscriptionFactory;
 import com.winchesters.accountsharingapp.user.User;
@@ -11,6 +12,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -30,6 +32,12 @@ public abstract class Account {
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb")
     private Credentials credentials;
+
+    @OneToMany(mappedBy="account", fetch = FetchType.LAZY)
+    private List<Offer> offers;
+
+    public Account(Subscription subscription) {
+        this.subscription = subscription;}
 
     @ManyToOne
     private User owner;

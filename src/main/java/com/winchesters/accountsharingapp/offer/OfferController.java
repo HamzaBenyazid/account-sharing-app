@@ -13,7 +13,7 @@ import javax.validation.Valid;
 @RequestMapping(path = "api/offer")
 @RequiredArgsConstructor
 public class OfferController {
-    private static final Logger LOG = LoggerFactory.getLogger(OfferController.class);
+    //private static final Logger LOG = LoggerFactory.getLogger(OfferController.class);
     private final OfferService offerService;
 
     @PostMapping("/create")
