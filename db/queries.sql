@@ -1,0 +1,11 @@
+-- CREATE ROLE account_sharing_app WITH
+--     LOGIN
+--     NOSUPERUSER
+--     INHERIT
+--     CREATEDB
+--     NOCREATEROLE
+--     NOREPLICATION
+--     PASSWORD 'account_sharing_app';
+--
+-- create database account_sharing_app WITH
+--     OWNER = account_sharing_app;
