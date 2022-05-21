@@ -16,6 +16,7 @@ import java.util.List;
 public class AccountService {
     private final AccountRepository accountRepository;
     private final SubscriptionService subscriptionService;
+
     private final Logger Log = LoggerFactory.getLogger(AccountService.class);
 
     public List<Account> listUserAccounts(String username){
@@ -23,15 +24,7 @@ public class AccountService {
     }
 
     public Account createAccount(CreateAccountDto dto){
-        Account account = null;
-        switch (AccountProvider.valueOf(dto.provider())){
-            case FAKE -> account = new FakeAccount();
-            case HBO -> account = new HBOAccount();
-            case NETFLIX -> account = new NetflixAccount();
-            case SPOTIFY -> account = new SpotifyAccount();
-            default -> throw new InvalidAccountProviderException();
-        }
-
+        Account account = AccountFactory.createAccount(dto.provider());
         Subscription subscription = subscriptionService.createSubscription(account,dto.subscriptionType());
         account.setSubscription(subscription);
 
