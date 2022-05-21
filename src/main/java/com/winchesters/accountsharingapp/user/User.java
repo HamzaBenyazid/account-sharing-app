@@ -21,6 +21,7 @@ import java.util.List;
 @Getter
 public class User {
     @Id
+    @Column(name = "id_user")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -34,7 +35,7 @@ public class User {
     private Date creation_date;
     private ApplicationUserRole role;
 
-    @OneToMany(mappedBy="creator", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="offerer", fetch = FetchType.LAZY)
     private List<Offer> offerings;
 
     @ManyToMany(fetch = FetchType.LAZY) @JoinTable(
