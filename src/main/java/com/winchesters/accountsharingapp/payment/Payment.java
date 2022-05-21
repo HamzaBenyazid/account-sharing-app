@@ -1,6 +1,8 @@
 package com.winchesters.accountsharingapp.payment;
 
 
+import com.winchesters.accountsharingapp.request.Request;
+import com.winchesters.accountsharingapp.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,7 +20,15 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Double total;
     private Date paymentDate;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToOne
+    @JoinColumn(name = "request_id")
+    private Request request;
+
 }
