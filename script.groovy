@@ -3,14 +3,14 @@ def buildJar(){
     sh 'mvn clean package'
 }
 def buildImage(){
-    echo "${IMAGE_NAME}"
-    sh "docker build -t oubaydos/temp:${IMAGE_NAME} ."
+    echo "${IMAGE_TAG}"
+    sh "docker build -t oubaydos/temp:${IMAGE_TAG} ."
 }
 def pushImage(){
     echo "pushing the docker image"
     withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]){
         sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
-        sh "docker push oubaydos/temp:$IMAGE_NAME"
+        sh "docker push oubaydos/temp:$IMAGE_TAG"
     }
 }
 def commitVersion(){
