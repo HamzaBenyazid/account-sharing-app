@@ -1,0 +1,26 @@
+version: "3.3"
+services:
+  api:
+    image: shareacc-backend
+    build: .
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/account_sharing_app
+      SPRING_DATASOURCE_USERNAME: account_sharing_app
+      SPRING_DATASOURCE_PASSWORD: account_sharing_app
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      - db
+  db:
+    image: 'postgres:14-alpine'
+    volumes:
+      - "db_volume:/var/lib/postgresql/data"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: account_sharing_app
+      POSTGRES_USER: account_sharing_app
+      POSTGRES_PASSWORD: account_sharing_app
+volumes:
+  db_volume:
