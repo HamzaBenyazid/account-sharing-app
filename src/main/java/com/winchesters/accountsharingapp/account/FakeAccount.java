@@ -6,6 +6,9 @@ import com.winchesters.accountsharingapp.subscription.fake.FakeSubscriptionFacto
 //This class is just for dev
 public class FakeAccount extends Account {
     public FakeAccount() {
-        super(new FakeSubscriptionFactory());
+        super(
+                new FakeSubscriptionFactory(),
+                AccountProvider.FAKE
+        );
     }
 }

@@ -33,7 +33,6 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
-
     public Account findAccountById(Long id){
         return accountRepository.findById(id)
                 .orElseThrow(()->new AccountNotFoundException(id));
@@ -46,6 +45,5 @@ public class AccountService {
         Account account = findAccountById(accountId);
         account.setCredentials(credentials);
     }
-
 
 }

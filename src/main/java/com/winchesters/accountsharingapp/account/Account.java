@@ -27,6 +27,9 @@ public abstract class Account {
     @Column(columnDefinition = "jsonb")
     private Subscription subscription;
 
+    @Enumerated(EnumType.STRING)
+    private AccountProvider provider;
+
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb")
     private Credentials credentials;
@@ -37,8 +40,9 @@ public abstract class Account {
     @Transient
     private SubscriptionFactory subscriptionFactory ;
 
-    public Account(SubscriptionFactory subscriptionFactory) {
+    public Account(SubscriptionFactory subscriptionFactory,AccountProvider provider) {
         this.subscriptionFactory = subscriptionFactory;
+        this.provider = provider;
     }
 
 }
