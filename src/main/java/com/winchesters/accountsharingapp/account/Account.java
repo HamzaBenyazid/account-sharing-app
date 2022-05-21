@@ -1,6 +1,7 @@
 package com.winchesters.accountsharingapp.account;
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import com.winchesters.accountsharingapp.offer.Offer;
 import com.winchesters.accountsharingapp.subscription.Subscription;
 import com.winchesters.accountsharingapp.subscription.SubscriptionFactory;
 import com.winchesters.accountsharingapp.user.User;
@@ -36,7 +37,8 @@ public abstract class Account {
     private List<Offer> offers;
 
     public Account(Subscription subscription) {
-        this.subscription = subscription;
+        this.subscription = subscription;}
+
     @ManyToOne
     private User owner;
 
@@ -47,4 +49,4 @@ public abstract class Account {
         this.subscriptionFactory = subscriptionFactory;
     }
 
-}}
+}
