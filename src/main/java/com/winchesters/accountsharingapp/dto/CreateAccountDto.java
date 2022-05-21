@@ -1,4 +1,4 @@
-package com.winchesters.accountsharingapp.account.dto;
+package com.winchesters.accountsharingapp.dto;
 
 import com.winchesters.accountsharingapp.account.Credentials;
 

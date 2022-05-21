@@ -1,6 +1,6 @@
 package com.winchesters.accountsharingapp.account;
 
-import com.winchesters.accountsharingapp.exception.InvalidAccountProviderException;
+import com.winchesters.accountsharingapp.exception.account.InvalidAccountProviderException;
 
 public class AccountFactory {
     public static Account createAccount(String provider){
