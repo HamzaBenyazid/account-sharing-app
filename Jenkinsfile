@@ -19,23 +19,23 @@ pipeline{
                 script{
                     echo "incrementing project version"
                     sh 'mvn build-helper:parse-version versions:set -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} versions:commit'
-                    def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
-                    version = matcher[0][1]
+//                     def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+                    version = readMavenPom().getVersion()
                     env.IMAGE_NAME = "$version-$BUILD_NUMBER"
                     echo "the new version is : ${version}"
                 }
             }
         }
-        stage("build docker-image"){
-            steps{
-              script{
-                // test are included here
-                  echo "building the docker image"
-                  gv.buildImage()
-              }
-            }
-
-        }
+//         stage("build docker-image"){
+//             steps{
+//               script{
+//                 // test are included here
+//                   echo "building the docker image"
+//                   gv.buildImage()
+//               }
+//             }
+//
+//         }
 // //          stage("push docker-image"){
 // //             steps{
 // //               script{
