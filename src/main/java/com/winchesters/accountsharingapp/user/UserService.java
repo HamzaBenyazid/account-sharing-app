@@ -38,10 +38,6 @@ public class UserService {
                 .orElseThrow(()->new UserNotFoundException(username));
     }
 
-    public UserResponseDto getUser() {
-        return EntityToDtoMapper.userToUserResponseDto(this.getCurrentUser());
-    }
-
     public List<UserResponseDto> getUsers() {
         return EntityToDtoMapper.userToUserResponseDto(userRepository.findAll());
     }
@@ -90,7 +86,7 @@ public class UserService {
         );
     }
 
-    public User getCurrentUser(){
+    public User getUser(){
         String username = authenticationFacade.getAuthenticatedUsername();
 
         if(!username.equals("anonymousUser")) {

@@ -20,11 +20,6 @@ public class UserController {
         return userService.getUsers();
     }
 
-    @GetMapping
-    public UserResponseDto getUser(){
-        return userService.getUser();
-    }
-
     @PostMapping(headers={"target=adminCreateUser"})
     public UserResponseDto adminCreateUser(@RequestBody User user){
         return userService.adminCreateUser(user);

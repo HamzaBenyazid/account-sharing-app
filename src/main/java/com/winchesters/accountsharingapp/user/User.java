@@ -32,8 +32,8 @@ public class User {
     private String username;
     private String password;
     private Boolean verified;
-    private Date birth_date;
-    private Date creation_date;
+    private Date birthDate;
+    private Date creationDate;
     private ApplicationUserRole role;
 
     @OneToMany(mappedBy="offerer", fetch = FetchType.LAZY)
