@@ -1,5 +1,6 @@
 package com.winchesters.accountsharingapp.offer;
 
+import com.winchesters.accountsharingapp.account.Account;
 import com.winchesters.accountsharingapp.request.Request;
 import com.winchesters.accountsharingapp.user.User;
 import lombok.Getter;
@@ -17,6 +18,7 @@ import java.util.List;
 @Setter
 public class Offer {
     @Id
+    @Column(name = "id_offer")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date OfferDate;
@@ -24,15 +26,21 @@ public class Offer {
     private Integer maxUsers;
     private Boolean isPublic;
 
+
     @ManyToOne
-    private User creator;
+    @JoinColumn(name = "id_account")
+    private Account account;
+
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User offerer;
 
     @ManyToMany(fetch = FetchType.LAZY) @JoinTable(
             name = "subscription",
             joinColumns = {@JoinColumn(name = "OFFER_ID")},
             inverseJoinColumns = {@JoinColumn(name = "USER_ID")}
     )
-    private List<User> users;
+    private List<User> splitters;
 
     @OneToMany(mappedBy="offer", fetch = FetchType.LAZY)
     private List<Request> requests;
