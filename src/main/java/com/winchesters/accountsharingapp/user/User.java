@@ -1,6 +1,7 @@
 package com.winchesters.accountsharingapp.user;
 
 
+import com.winchesters.accountsharingapp.account.Account;
 import com.winchesters.accountsharingapp.offer.Offer;
 import com.winchesters.accountsharingapp.security.ApplicationUserRole;
 import com.winchesters.accountsharingapp.subscription.Subscription;
@@ -37,6 +38,9 @@ public class User {
 
     @OneToMany(mappedBy="offerer", fetch = FetchType.LAZY)
     private List<Offer> offerings;
+
+    @OneToMany(mappedBy="owner", fetch = FetchType.LAZY)
+    private List<Account> accounts;
 
     @ManyToMany(fetch = FetchType.LAZY) @JoinTable(
             name = "subscription",

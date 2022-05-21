@@ -1,6 +1,7 @@
-package com.winchesters.accountsharingapp.subscription;
+package com.winchesters.accountsharingapp.subscription.fake;
 
 
+import com.winchesters.accountsharingapp.subscription.Subscription;
 import lombok.Getter;
 
 //This class is just for dev

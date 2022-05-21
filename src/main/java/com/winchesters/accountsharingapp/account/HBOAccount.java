@@ -1,9 +1,10 @@
 package com.winchesters.accountsharingapp.account;
 
 import com.winchesters.accountsharingapp.subscription.Subscription;
+import com.winchesters.accountsharingapp.subscription.hbo.HBOSubscriptionFactory;
 
 public class HBOAccount extends Account{
-    public HBOAccount(Subscription subscription) {
-        super(subscription);
+    public HBOAccount() {
+        super(new HBOSubscriptionFactory());
     }
 }
