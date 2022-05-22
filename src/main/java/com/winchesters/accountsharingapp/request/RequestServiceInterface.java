@@ -6,7 +6,9 @@ public interface RequestServiceInterface {
 
     void createRequest(Long offerId);
     Request findRequestById(Long id);
-    List<Request> getRequestsToUser(String username);
+    List<Request> getRequestsToUser();
     void deleteRequest(Long requestId);
     List<Request> getRequestsForOffer(Long offerId);
+    void denyRequest(Long requestId);
+    void acceptRequest(Long requestId);
 }
