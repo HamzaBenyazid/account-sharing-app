@@ -3,7 +3,7 @@ package com.winchesters.accountsharingapp.offer;
 import com.winchesters.accountsharingapp.account.AccountProvider;
 import com.winchesters.accountsharingapp.auth.AuthenticationFacade;
 import com.winchesters.accountsharingapp.dto.OfferResponseDto;
-import com.winchesters.accountsharingapp.exception.offer.MaxSplittersExceededException;
+import com.winchesters.accountsharingapp.exception.offer.InvalidMaxSplitterValue;
 import com.winchesters.accountsharingapp.exception.offer.OfferNotEmptyException;
 import com.winchesters.accountsharingapp.exception.offer.OfferNotFoundException;
 import com.winchesters.accountsharingapp.mapper.EntityToDtoMapper;
@@ -43,13 +43,15 @@ public class OfferService implements OfferServiceInterface {
     }
 
     @Override
-    public Page<Offer> getOffersByOfferer(String username, int pageNumber, int pageSize) {
+    public Page<Offer> getOffersByOfferer(String username, Integer pageNumber, Integer pageSize) {
+        if(pageNumber == null) pageNumber=1;
         Pageable sortedByDate = PageRequest.of(pageNumber - 1, pageSize, Sort.by("uploadDate").descending());
         return offerRepository.findByOffererUsername(username, sortedByDate);
     }
 
     @Override
-    public Page<Offer> getByCalculatedPriceAndAccount_Provider(Double calculatedPrice, AccountProvider provider, int pageNumber, int pageSize) {
+    public Page<Offer> getByCalculatedPriceAndAccount_Provider(Double calculatedPrice, AccountProvider provider, Integer pageNumber, Integer pageSize) {
+        if(pageNumber == null) pageNumber=1;
         Pageable sortedByDate = PageRequest.of(pageNumber - 1, pageSize, Sort.by("uploadDate").descending());
         return offerRepository.findByCalculatedPriceAndAccount_Provider(calculatedPrice,provider,sortedByDate);
     }
@@ -58,8 +60,8 @@ public class OfferService implements OfferServiceInterface {
     public OfferResponseDto updateMaxSplitters(Long offerId, Integer maxSplitters) {
         Offer offer = offerRepository.findById(offerId)
                 .orElseThrow(() -> new IllegalStateException("offer with id : "+offerId+" not found"));
-        if(offer.getAccount().getSubscription().getMaxUsers()>= maxSplitters){
-            throw new MaxSplittersExceededException("Maximum number of splitters exceeded");
+        if(offer.getAccount().getSubscription().getMaxUsers()>= maxSplitters || offer.getSplitters().size()> maxSplitters) {
+            throw new InvalidMaxSplitterValue("Invalid maximum number of splitters");
         }
         String username = authenticationFacade.getAuthenticatedUsername();
         if(username.equals("anonymousUser")){
@@ -88,7 +90,8 @@ public class OfferService implements OfferServiceInterface {
     }
 
     @Override
-    public Page<Offer> getOffers(int pageNumber, int pageSize) {
+    public Page<Offer> getOffers(Integer pageNumber, Integer  pageSize) {
+        if(pageNumber == null) pageNumber=1;
         Pageable sortedByDate = PageRequest.of(pageNumber - 1, pageSize, Sort.by("uploadDate").descending());
         return offerRepository.findAll(sortedByDate);
     }

@@ -3,9 +3,7 @@ package com.winchesters.accountsharingapp.offer;
 import com.winchesters.accountsharingapp.account.Account;
 import com.winchesters.accountsharingapp.request.Request;
 import com.winchesters.accountsharingapp.user.User;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,9 +14,10 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
 public class Offer {
     @Id
-    @Column(name = "id_offer")
+    @Column(name = "offer_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date uploadDate;
@@ -28,11 +27,11 @@ public class Offer {
 
 
     @ManyToOne
-    @JoinColumn(name = "id_account")
+    @JoinColumn(name = "account_id")
     private Account account;
 
     @ManyToOne
-    @JoinColumn(name = "id_user")
+    @JoinColumn(name = "user_id")
     private User offerer;
 
     @ManyToMany(fetch = FetchType.LAZY) @JoinTable(

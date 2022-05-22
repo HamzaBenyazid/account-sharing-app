@@ -23,6 +23,7 @@ import java.util.List;
 public abstract class Account {
 
     @Id
+    @Column(name = "account_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Type(type = "jsonb")

@@ -24,17 +24,17 @@ public class RequestController {
         return requestService.getRequestsForOffer(offerId);
     }
 
-    @PostMapping()
+    @PostMapping("/g")
     public void submitRequest(@PathVariable("offerId") Long offerId) {
          requestService.createRequest(offerId);
     }
 
-    @PostMapping()
+    @PostMapping("/l")
     public void acceptRequest(@PathVariable("requestId") Long requestId) {
         requestService.acceptRequest(requestId);
     }
 
-    @PostMapping()
+    @PostMapping("/o")
     public void denyRequest(@PathVariable("requestId") Long requestId) {
         requestService.denyRequest(requestId);
     }
