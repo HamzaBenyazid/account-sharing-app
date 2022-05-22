@@ -13,6 +13,7 @@ import java.security.Provider;
 @Repository
 public interface OfferRepository extends JpaRepository <Offer,Long> {
     Page<Offer> findByOffererId(Long offererId, Pageable page);
+    Page<Offer> findByOffererUsername(String username, Pageable page);
     @Query("SELECT c FROM Offer c WHERE (:price is null or c.calculatedPrice = :price) and (:provider is null or c.account.provider = :provider)")
     Page<Offer> findByCalculatedPriceAndAccount_Provider(@Param("price") Double calculatedPrice, @Param("provider") AccountProvider provider, Pageable page);
 

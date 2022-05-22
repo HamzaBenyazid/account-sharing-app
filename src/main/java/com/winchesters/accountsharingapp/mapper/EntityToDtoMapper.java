@@ -2,7 +2,7 @@ package com.winchesters.accountsharingapp.mapper;
 
 import com.winchesters.accountsharingapp.dto.UserResponseDto;
 import com.winchesters.accountsharingapp.offer.Offer;
-import com.winchesters.accountsharingapp.offer.OfferResponseDto;
+import com.winchesters.accountsharingapp.dto.OfferResponseDto;
 import com.winchesters.accountsharingapp.user.User;
 
 
@@ -29,6 +29,7 @@ public class EntityToDtoMapper {
         offerResponseDto.setIsPublic(offer.getIsPublic());
         offerResponseDto.setRequests(offer.getRequests());
         offerResponseDto.setMaxSplitters(offer.getMaxSplitters());
+        offerResponseDto.setSplitterUsernames(offer.getSplitters().stream().map(User::getUsername).collect(Collectors.toList()));
         return offerResponseDto;
     }
     public static List<UserResponseDto> userToUserResponseDto(Collection<User> users) {

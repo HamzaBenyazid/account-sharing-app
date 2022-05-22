@@ -1,8 +1,12 @@
 package com.winchesters.accountsharingapp.offer;
 
 import com.winchesters.accountsharingapp.account.AccountProvider;
+import com.winchesters.accountsharingapp.auth.AuthenticationFacade;
+import com.winchesters.accountsharingapp.dto.OfferResponseDto;
+import com.winchesters.accountsharingapp.exception.offer.MaxSplittersExceededException;
 import com.winchesters.accountsharingapp.exception.offer.OfferNotEmptyException;
 import com.winchesters.accountsharingapp.exception.offer.OfferNotFoundException;
+import com.winchesters.accountsharingapp.mapper.EntityToDtoMapper;
 import com.winchesters.accountsharingapp.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +23,7 @@ public class OfferService implements OfferServiceInterface {
     // private static final Logger LOG = LoggerFactory.getLogger(OfferService.class);
     private final OfferRepository offerRepository;
     private final UserService userService;
+    private final AuthenticationFacade authenticationFacade;
 
     @Override
     public void createOffer(Offer offer) {
@@ -38,9 +43,9 @@ public class OfferService implements OfferServiceInterface {
     }
 
     @Override
-    public Page<Offer> getOffersByOfferer(Long offererId, int pageNumber, int pageSize) {
+    public Page<Offer> getOffersByOfferer(String username, int pageNumber, int pageSize) {
         Pageable sortedByDate = PageRequest.of(pageNumber - 1, pageSize, Sort.by("uploadDate").descending());
-        return offerRepository.findByOffererId(offererId, sortedByDate);
+        return offerRepository.findByOffererUsername(username, sortedByDate);
     }
 
     @Override
@@ -50,13 +55,24 @@ public class OfferService implements OfferServiceInterface {
     }
 
     @Override
-    @Transactional
-    public void updateMaxSplitters(Long offerId, Integer maxSplitters) {
+    public OfferResponseDto updateMaxSplitters(Long offerId, Integer maxSplitters) {
         Offer offer = offerRepository.findById(offerId)
                 .orElseThrow(() -> new IllegalStateException("offer with id : "+offerId+" not found"));
-        if(maxSplitters!=null && offer.getAccount().getSubscription().getMaxUsers()>= maxSplitters){
+        if(offer.getAccount().getSubscription().getMaxUsers()>= maxSplitters){
+            throw new MaxSplittersExceededException("Maximum number of splitters exceeded");
+        }
+        String username = authenticationFacade.getAuthenticatedUsername();
+        if(username.equals("anonymousUser")){
+            throw new IllegalStateException("user must be authenticated.");
+        }
+        if (!username.equals(offer.getOfferer().getUsername()))
+            throw new IllegalStateException("You can't update this offer, you are not the creator");
+
+        if(maxSplitters!=null){
             offer.setMaxSplitters(maxSplitters);
         }
+        offerRepository.save(offer);
+        return EntityToDtoMapper.offerToOfferResponseDto(offer);
 
     }
 
