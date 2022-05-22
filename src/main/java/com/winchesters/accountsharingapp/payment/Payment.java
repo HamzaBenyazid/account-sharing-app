@@ -18,6 +18,7 @@ import java.util.Date;
 public class Payment {
 
     @Id
+    @Column(name = "payment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Double total;

@@ -18,7 +18,7 @@ import java.util.List;
 @Setter
 public class Offer {
     @Id
-    @Column(name = "id_offer")
+    @Column(name = "offer_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date uploadDate;
@@ -28,11 +28,11 @@ public class Offer {
 
 
     @ManyToOne
-    @JoinColumn(name = "id_account")
+    @JoinColumn(name = "account_id")
     private Account account;
 
     @ManyToOne
-    @JoinColumn(name = "id_user")
+    @JoinColumn(name = "user_id")
     private User offerer;
 
     @ManyToMany(fetch = FetchType.LAZY) @JoinTable(
