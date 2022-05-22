@@ -3,7 +3,7 @@ def buildJar(){
     sh 'mvn clean package'
 }
 def buildImage(){
-    echo "${IMAGE_TAG}" //${IMAGE_TAG}
+//    echo "${IMAGE_TAG}" //${IMAGE_TAG}
     sh "docker build -t oubaydos/temp:tmm ."
 }
 def pushImage(){
