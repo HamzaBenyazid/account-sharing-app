@@ -3,6 +3,7 @@ package com.winchesters.accountsharingapp.user;
 
 import com.winchesters.accountsharingapp.account.Account;
 import com.winchesters.accountsharingapp.offer.Offer;
+import com.winchesters.accountsharingapp.request.Request;
 import com.winchesters.accountsharingapp.security.ApplicationUserRole;
 import com.winchesters.accountsharingapp.subscription.Subscription;
 import lombok.AllArgsConstructor;
@@ -48,6 +49,9 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "OFFER_ID")}
     )
     private List<Offer> subscriptions;
+
+    @OneToMany(mappedBy = "requester")
+    private List<Request> requests;
 
 
 }

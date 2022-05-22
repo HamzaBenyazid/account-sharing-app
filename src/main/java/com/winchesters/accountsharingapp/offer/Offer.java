@@ -21,9 +21,9 @@ public class Offer {
     @Column(name = "id_offer")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Date OfferDate;
+    private Date uploadDate;
     private Double calculatedPrice;
-    private Integer maxUsers;
+    private Integer maxSplitters;
     private Boolean isPublic;
 
 
