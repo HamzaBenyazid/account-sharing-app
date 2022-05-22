@@ -2,6 +2,7 @@ package com.winchesters.accountsharingapp.request;
 
 import com.winchesters.accountsharingapp.exception.request.RequestNotFoundException;
 import com.winchesters.accountsharingapp.offer.Offer;
+import com.winchesters.accountsharingapp.offer.OfferRepository;
 import com.winchesters.accountsharingapp.offer.OfferService;
 import com.winchesters.accountsharingapp.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class RequestService implements RequestServiceInterface{
     private final RequestRepository requestRepository;
     private final UserService userService;
     private final OfferService offerService;
+    private final OfferRepository offerRepository;
 
     @Override
     public void createRequest(Long offerId) {
@@ -56,7 +58,10 @@ public class RequestService implements RequestServiceInterface{
         Request request = requestRepository.findById(requestId)
                 .orElseThrow(()-> new IllegalStateException("request not found"));
         request.setStatus(RequestStatus.ACCEPTED);
+        Offer offer = offerService.getOfferById(request.getOffer().getId());
+        offer.getSplitters().add(request.getRequester());
         requestRepository.save(request);
+        offerRepository.save(offer);
     }
 
     @Override

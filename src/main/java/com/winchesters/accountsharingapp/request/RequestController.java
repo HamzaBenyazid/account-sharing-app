@@ -19,22 +19,22 @@ public class RequestController {
         return requestService.getRequestsToUser();
     }
 
-    @GetMapping("/{offerId}")
+    @GetMapping("/OfferRequests/{offerId}")
     public List<Request> getRequestsForOffer(@PathVariable("offerId") Long offerId) {
         return requestService.getRequestsForOffer(offerId);
     }
 
-    @PostMapping()
+    @PostMapping("/submitRequest/{offerId}")
     public void submitRequest(@PathVariable("offerId") Long offerId) {
          requestService.createRequest(offerId);
     }
 
-    @PostMapping()
+    @PostMapping("/acceptRequest/{requestId}")
     public void acceptRequest(@PathVariable("requestId") Long requestId) {
         requestService.acceptRequest(requestId);
     }
 
-    @PostMapping()
+    @PostMapping("/denyRequest/{requestId}")
     public void denyRequest(@PathVariable("requestId") Long requestId) {
         requestService.denyRequest(requestId);
     }

@@ -3,9 +3,7 @@ package com.winchesters.accountsharingapp.offer;
 import com.winchesters.accountsharingapp.account.Account;
 import com.winchesters.accountsharingapp.request.Request;
 import com.winchesters.accountsharingapp.user.User;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
 public class Offer {
     @Id
     @Column(name = "offer_id")
