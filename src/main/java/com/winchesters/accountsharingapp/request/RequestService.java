@@ -1,13 +1,10 @@
 package com.winchesters.accountsharingapp.request;
 
-import com.winchesters.accountsharingapp.account.Account;
 import com.winchesters.accountsharingapp.exception.request.RequestNotFoundException;
 import com.winchesters.accountsharingapp.offer.Offer;
 import com.winchesters.accountsharingapp.offer.OfferService;
 import com.winchesters.accountsharingapp.user.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,8 +36,8 @@ public class RequestService implements RequestServiceInterface{
     }
 
     @Override
-    public List<Request> getRequestsToUser(String username){
-        return requestRepository.findAllByOfferCreator(username);
+    public List<Request> getRequestsToUser(){
+        return requestRepository.findAllByOfferOfferer(userService.getUser().getUsername());
     }
 
     @Override
@@ -54,9 +51,20 @@ public class RequestService implements RequestServiceInterface{
         return requestRepository.findAllByOfferId(offerId);
     }
 
+    @Override
+    public void acceptRequest(Long requestId){
+        Request request = requestRepository.findById(requestId)
+                .orElseThrow(()-> new IllegalStateException("request not found"));
+        request.setStatus(RequestStatus.ACCEPTED);
+        requestRepository.save(request);
+    }
 
-
-
-
+    @Override
+    public void denyRequest(Long requestId){
+        Request request = requestRepository.findById(requestId)
+                .orElseThrow(()-> new IllegalStateException("request not found"));
+        request.setStatus(RequestStatus.DENIED);
+        requestRepository.save(request);
+    }
 
 }
