@@ -1,7 +1,7 @@
 FROM maven:3.8.5-openjdk-17 AS build
 WORKDIR /account-sharing-app
 COPY . .
-RUN mvn clean package -DskipTests
+#RUN mvn clean package -DskipTests
 ##
 FROM openjdk:17-jdk-alpine
 WORKDIR /account-sharing-app
