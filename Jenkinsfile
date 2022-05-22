@@ -6,14 +6,14 @@ pipeline{
     maven 'maven'
   }
     stages{
-//         stage("init"){
-//             steps{
-//                 script{
-//                     gv = load "script.groovy"
-//                     echo "loaded script.groovy"
-//                 }
-//             }
-//         }
+        stage("init"){
+            steps{
+                script{
+                    gv = load "script.groovy"
+                    echo "loaded script.groovy"
+                }
+            }
+        }
 //         stage("increment version"){
 //             steps{
 //                 script{
