@@ -95,4 +95,8 @@ public class UserService {
 
         throw new UserNotAuthenticatedException();
     }
+
+    public UserResponseDto getUserResponseDto(){
+        return EntityToDtoMapper.userToUserResponseDto(getUser());
+    }
 }

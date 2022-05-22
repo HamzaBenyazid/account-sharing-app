@@ -34,4 +34,9 @@ public class UserController {
     public void updateEmail(@PathVariable Long userId,@RequestBody String email){
         userService.updateEmail(userId, email);
     }
+
+    @GetMapping
+    public UserResponseDto profile(){
+        return userService.getUserResponseDto();
+    }
 }
