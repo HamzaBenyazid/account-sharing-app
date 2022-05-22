@@ -4,7 +4,7 @@ def buildJar(){
 }
 def buildImage(){
 //    echo "${IMAGE_TAG}" //${IMAGE_TAG}
-    sh "docker build -t oubaydos/temp:tmm ."
+    sh "docker build --target build -t oubaydos/temp:tmm ."
 }
 def pushImage(){
     echo "pushing the docker image"
