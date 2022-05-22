@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class OfferController {
     //private static final Logger LOG = LoggerFactory.getLogger(OfferController.class);
     private final OfferService offerService;
-    private final int pageSize;
+    private final int pageSize=16;
 
     @PostMapping("/create")
     @ResponseStatus( HttpStatus.CREATED )
@@ -42,11 +42,7 @@ public class OfferController {
         offerService.deteteOffer(offerId);
     }
 
-    @GetMapping("{username}/offers")
-    //todo : fix this url
-    public List<OfferResponseDto> getUserOffers(@PathVariable String username,@RequestParam int pageNumber){
-        return offerService.getOffersByOfferer(username, pageNumber,pageSize).stream().map(EntityToDtoMapper::offerToOfferResponseDto).collect(Collectors.toList());
-    }
+
 
     @PutMapping("offers/{offerId}")
     public OfferResponseDto updateImage(@PathVariable Long offerId,Integer maxSplitters){
