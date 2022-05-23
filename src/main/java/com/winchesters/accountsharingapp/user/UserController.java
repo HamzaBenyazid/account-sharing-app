@@ -1,5 +1,6 @@
 package com.winchesters.accountsharingapp.user;
 
+import com.winchesters.accountsharingapp.dto.OfferResponseDto;
 import com.winchesters.accountsharingapp.dto.SignUpFormDto;
 import com.winchesters.accountsharingapp.dto.UserResponseDto;
 
