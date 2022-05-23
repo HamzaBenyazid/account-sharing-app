@@ -1,4 +1,4 @@
-package com.winchesters.accountsharingapp.payment;
+package com.winchesters.accountsharingapp.payment.entity;
 
 
 import com.winchesters.accountsharingapp.request.Request;
