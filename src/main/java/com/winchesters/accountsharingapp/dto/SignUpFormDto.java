@@ -11,5 +11,4 @@ public class SignUpFormDto {
     private String username;
     private String email;
     private String password;
-    private Date birthDate;
 }

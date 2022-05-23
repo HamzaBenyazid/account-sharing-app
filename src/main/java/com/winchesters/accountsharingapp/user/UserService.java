@@ -66,6 +66,8 @@ public class UserService {
         User user = new User();
         user.setPassword(passwordEncoder.encode(password));
         user.setUsername(signUpForm.getUsername());
+        user.setFirstName(signUpForm.getFirstName());
+        user.setLastName(signUpForm.getLastName());
         //TODO: add email validation
         user.setEmail(signUpForm.getEmail());
         user.setRole(CONTRIBUTOR);
