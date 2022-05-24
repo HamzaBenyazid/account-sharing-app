@@ -8,25 +8,32 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RequiredArgsConstructor
+@RestController
+@RequestMapping(path = "api/payment")
 public class PaymentController implements IPaymentController{
     private static final Logger Log = LoggerFactory.getLogger(PaymentController.class);
     private final PaymentService paymentService;
 
-    @GetMapping("/test")
+    @PostMapping(value = "/testing")
     @ResponseStatus( HttpStatus.CREATED )
-    private ResponseEntity<String> test() {
-        return new ResponseEntity<>("tested",HttpStatus.OK);
+
+    private ResponseEntity<String> test( HttpServletRequest request) throws StripeException {
+
+return paymentService.test("oubauda56@gma.com","token",100);
     }
 
-    @Override
-    public String checkout(Model model) {
-        return paymentService.checkout(model);
+    @PostMapping(value = "/checkout",consumes = "application/json")
+    @ResponseStatus( HttpStatus.OK )
+    public void checkout(@RequestBody ChargeRequest chargeRequest) throws StripeException {
+         paymentService.checkout(chargeRequest);
     }
+
+
 
     @Override
     public void charge(ChargeRequest chargeRequest, Model model)

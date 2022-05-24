@@ -3,6 +3,7 @@ package com.winchesters.accountsharingapp.payment;
 import com.stripe.exception.StripeException;
 import com.winchesters.accountsharingapp.payment.entity.ChargeRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "api/payment")
 public interface IPaymentController {
 
-    @RequestMapping("/checkout")
+    @PostMapping(value = "/checkout",consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus( HttpStatus.OK )
-    String checkout(Model model);
+    void checkout(ChargeRequest chargeRequest) throws StripeException;
 
     @PostMapping("/charge")
     @ResponseStatus( HttpStatus.OK )
