@@ -3,6 +3,7 @@ package com.winchesters.accountsharingapp.user;
 
 import com.winchesters.accountsharingapp.auth.AuthenticationFacade;
 import com.winchesters.accountsharingapp.dto.SignUpFormDto;
+import com.winchesters.accountsharingapp.dto.OfferDto;
 import com.winchesters.accountsharingapp.dto.UserResponseDto;
 import com.winchesters.accountsharingapp.exception.user.InvalidEmailException;
 import com.winchesters.accountsharingapp.exception.user.InvalidUsernameException;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -100,5 +102,14 @@ public class UserService {
 
     public UserResponseDto getUserResponseDto(){
         return EntityToDtoMapper.userToUserResponseDto(getUser());
+    }
+
+    public List<OfferDto> listUserOffers() {
+        User user = getUser();
+        List<OfferDto> subscribedOffers = EntityToDtoMapper.OfferToOfferDto(user.getOfferings(),true);
+        List<OfferDto> ownedOffers = EntityToDtoMapper.OfferToOfferDto(user.getOfferings(),false);
+        List<OfferDto> offers = new ArrayList<>(ownedOffers);
+        offers.addAll(subscribedOffers);
+        return offers;
     }
 }

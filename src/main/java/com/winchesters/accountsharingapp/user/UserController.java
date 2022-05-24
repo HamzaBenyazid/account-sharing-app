@@ -2,6 +2,7 @@ package com.winchesters.accountsharingapp.user;
 
 import com.winchesters.accountsharingapp.dto.OfferResponseDto;
 import com.winchesters.accountsharingapp.dto.SignUpFormDto;
+import com.winchesters.accountsharingapp.dto.OfferDto;
 import com.winchesters.accountsharingapp.dto.UserResponseDto;
 
 import com.winchesters.accountsharingapp.mapper.EntityToDtoMapper;
@@ -43,6 +44,11 @@ public class UserController {
     @GetMapping("{username}/offers")
     public List<OfferResponseDto> getUserOffers(@PathVariable String username, @RequestParam int pageNumber){
         return offerService.getOffersByOfferer(username, pageNumber,pageSize).stream().map(EntityToDtoMapper::offerToOfferResponseDto).collect(Collectors.toList());
+    }
+
+    @GetMapping("/offers")
+    public List<OfferDto> listUserSubscriptions(){
+        return userService.listUserOffers();
     }
 
     @GetMapping

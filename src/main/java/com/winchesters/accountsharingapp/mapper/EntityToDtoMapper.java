@@ -1,7 +1,9 @@
 package com.winchesters.accountsharingapp.mapper;
 
 import com.winchesters.accountsharingapp.account.Account;
+import com.winchesters.accountsharingapp.account.AccountProvider;
 import com.winchesters.accountsharingapp.dto.AccountResponseDto;
+import com.winchesters.accountsharingapp.dto.OfferDto;
 import com.winchesters.accountsharingapp.dto.UserResponseDto;
 import com.winchesters.accountsharingapp.offer.Offer;
 import com.winchesters.accountsharingapp.dto.OfferResponseDto;
@@ -50,4 +52,19 @@ public class EntityToDtoMapper {
         return accounts.stream().map(EntityToDtoMapper::accountToAccountResponseDto).toList();
     }
 
+    public static OfferDto OfferToOfferDto(Offer offer,Boolean owned) {
+        return new OfferDto(
+                offer.getId(),
+                owned,
+                offer.getAccount().getProvider(),
+                offer.getAccount().getSubscriptionType(),
+                offer.getMaxSplitters(),
+                offer.getSplitters().size(),
+                offer.getCalculatedPrice()
+        );
     }
+
+    public static List<OfferDto> OfferToOfferDto(List<Offer> offers,Boolean owned) {
+        return offers.stream().map((offer -> OfferToOfferDto(offer,owned))).toList();
+    }
+}
