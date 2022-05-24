@@ -6,6 +6,7 @@ import com.winchesters.accountsharingapp.user.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,9 +40,9 @@ public class Offer {
             joinColumns = {@JoinColumn(name = "OFFER_ID")},
             inverseJoinColumns = {@JoinColumn(name = "USER_ID")}
     )
-    private List<User> splitters;
+    private List<User> splitters = new ArrayList<>();
 
     @OneToMany(mappedBy="offer", fetch = FetchType.LAZY)
-    private List<Request> requests;
+    private List<Request> requests= new ArrayList<>();;
 
 }

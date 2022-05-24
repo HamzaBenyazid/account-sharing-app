@@ -25,18 +25,22 @@ public class EntityToDtoMapper {
     }
     public static OfferResponseDto offerToOfferResponseDto(Offer offer){
         OfferResponseDto offerResponseDto = new OfferResponseDto();
-        offerResponseDto.setOfferer(offer.getOfferer());
-        offerResponseDto.setAccount(offer.getAccount());
+        offerResponseDto.setOfferer(offer.getOfferer().getUsername());
+        offerResponseDto.setAccountId(offer.getAccount().getId());
         offerResponseDto.setId(offer.getId());
         offerResponseDto.setCalculatedPrice(offer.getCalculatedPrice());
         offerResponseDto.setUploadDate(offer.getUploadDate());
         offerResponseDto.setIsPublic(offer.getIsPublic());
-        offerResponseDto.setRequests(offer.getRequests());
+//        offerResponseDto.setRequests(offer.getRequests());
         offerResponseDto.setMaxSplitters(offer.getMaxSplitters());
         offerResponseDto.setSplitterUsernames(offer.getSplitters().stream().map(User::getUsername).collect(Collectors.toList()));
         return offerResponseDto;
     }
-    public static List<UserResponseDto> userToUserResponseDto(Collection<User> users) {
+    public static List<OfferResponseDto> offerToOfferResponseDto(List<Offer> offers){
+        return offers.stream().map(EntityToDtoMapper::offerToOfferResponseDto).toList();
+    }
+
+        public static List<UserResponseDto> userToUserResponseDto(Collection<User> users) {
         return users.stream().map(EntityToDtoMapper::userToUserResponseDto).collect(Collectors.toList());
     }
 

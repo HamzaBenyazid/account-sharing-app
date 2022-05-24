@@ -50,6 +50,9 @@ public abstract class Account {
     private User owner;
 
     @Transient
+    private Subscription subscription;
+
+    @Transient
     private SubscriptionFactory subscriptionFactory ;
 
     public Account(SubscriptionFactory subscriptionFactory,AccountProvider provider) {
@@ -58,7 +61,8 @@ public abstract class Account {
     }
 
     public Subscription getSubscription(){
-        return subscriptionFactory.createSubscription(this.subscriptionType);
+        if (subscription == null ) subscription = subscriptionFactory.createSubscription(this.subscriptionType);
+        return subscription;
     }
 
 }

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/request")
+@RequestMapping("api/v1/request")
 public class RequestController {
     private final RequestService requestService;
 
@@ -14,17 +14,17 @@ public class RequestController {
         this.requestService = requestService;
     }
 
-    @GetMapping("/myRequests")
+    @GetMapping("")
     public List<Request> getRequestsToUser() {
         return requestService.getRequestsToUser();
     }
 
-    @GetMapping("/OfferRequests/{offerId}")
+    @GetMapping("/{offerId}")
     public List<Request> getRequestsForOffer(@PathVariable("offerId") Long offerId) {
         return requestService.getRequestsForOffer(offerId);
     }
 
-    @PostMapping("/submitRequest/{offerId}")
+    @PostMapping("/{offerId}")
     public void submitRequest(@PathVariable("offerId") Long offerId) {
          requestService.createRequest(offerId);
     }

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional
@@ -107,4 +108,8 @@ public class OfferService implements OfferServiceInterface {
     }
 
 
+    public List<OfferResponseDto> listOffers() {
+        return EntityToDtoMapper.offerToOfferResponseDto(offerRepository.findAll());
+
+    }
 }

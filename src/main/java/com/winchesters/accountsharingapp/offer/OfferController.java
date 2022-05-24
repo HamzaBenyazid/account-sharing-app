@@ -30,8 +30,13 @@ public class OfferController {
     }
 
     @GetMapping("")
-    public List<Offer> listOffers(@RequestParam Integer pageNumber,@RequestParam Double price,@RequestParam AccountProvider accountProvider){
+    public List<Offer> filterOffers(@RequestParam Integer pageNumber,@RequestParam Double price,@RequestParam AccountProvider accountProvider){
        return  offerService.getByCalculatedPriceAndAccount_Provider(price,accountProvider,pageNumber,pageSize).stream().collect(Collectors.toList());
+    }
+
+    @GetMapping("/all")
+    public List<OfferResponseDto> listOffers(){
+        return  offerService.listOffers();
     }
 
     @GetMapping("/{offerId}")

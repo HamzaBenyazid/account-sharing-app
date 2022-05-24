@@ -47,7 +47,7 @@ public class UserController {
     }
 
     @GetMapping("/offers")
-    public List<OfferDto> listUserSubscriptions(){
+    public List<OfferDto> listUserOffers(){
         return userService.listUserOffers();
     }
 
