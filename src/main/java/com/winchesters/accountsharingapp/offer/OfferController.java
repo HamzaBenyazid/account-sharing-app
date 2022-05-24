@@ -56,6 +56,10 @@ public class OfferController {
         return offerService.updateMaxSplitters(offerId,maxSplitters);
     }
 
+    @GetMapping("{offerId}/subscribers")
+    public List<String> listOfferSubscribers(@PathVariable Long offerId){
+        return offerService.listOfferSubscribers(offerId);
+    }
 
 
 }

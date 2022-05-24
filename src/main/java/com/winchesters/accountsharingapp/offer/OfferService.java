@@ -9,6 +9,7 @@ import com.winchesters.accountsharingapp.exception.offer.InvalidMaxSplitterValue
 import com.winchesters.accountsharingapp.exception.offer.OfferNotEmptyException;
 import com.winchesters.accountsharingapp.exception.offer.OfferNotFoundException;
 import com.winchesters.accountsharingapp.mapper.EntityToDtoMapper;
+import com.winchesters.accountsharingapp.user.User;
 import com.winchesters.accountsharingapp.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -111,5 +112,9 @@ public class OfferService implements OfferServiceInterface {
     public List<OfferResponseDto> listOffers() {
         return EntityToDtoMapper.offerToOfferResponseDto(offerRepository.findAll());
 
+    }
+
+    public List<String> listOfferSubscribers(Long offerId) {
+        return this.getOfferById(offerId).getSplitters().stream().map(User::getUsername).toList();
     }
 }

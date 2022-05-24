@@ -4,6 +4,7 @@ import com.winchesters.accountsharingapp.exception.request.RequestNotFoundExcept
 import com.winchesters.accountsharingapp.offer.Offer;
 import com.winchesters.accountsharingapp.offer.OfferRepository;
 import com.winchesters.accountsharingapp.offer.OfferService;
+import com.winchesters.accountsharingapp.user.User;
 import com.winchesters.accountsharingapp.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,13 @@ public class RequestService implements RequestServiceInterface{
     @Override
     public void createRequest(Long offerId) {
         Request request = new Request();
-        request.setRequester(userService.getUser());
+        User user = userService.getUser();
+
+        //TODO
+        //You should throw an exception in this case
+        if(user.getOfferings().stream().map(Offer::getId).toList().contains(offerId)) return;
+
+        request.setRequester(user);
         Offer offer = offerService.getOfferById(offerId);
         request.setOffer(offer);
         request.setStatus(RequestStatus.WAITING);
@@ -39,7 +46,7 @@ public class RequestService implements RequestServiceInterface{
 
     @Override
     public List<Request> getRequestsToUser(){
-        return requestRepository.findAllByOfferOfferer(userService.getUser().getUsername());
+        return requestRepository.findAllByRequesterUsername(userService.getUser().getUsername());
     }
 
     @Override

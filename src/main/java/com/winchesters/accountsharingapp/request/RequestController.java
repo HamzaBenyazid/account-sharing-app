@@ -40,4 +40,9 @@ public class RequestController {
     }
 
 
+    @DeleteMapping("{requestId}")
+    public void deleteRequest(@PathVariable("requestId") Long requestId) {
+        requestService.deleteRequest(requestId);
+    }
+
 }

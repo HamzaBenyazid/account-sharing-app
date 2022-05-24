@@ -107,7 +107,7 @@ public class UserService {
     public List<OfferDto> listUserOffers() {
         User user = getUser();
         List<OfferDto> subscribedOffers = EntityToDtoMapper.OfferToOfferDto(user.getOfferings(),true);
-        List<OfferDto> ownedOffers = EntityToDtoMapper.OfferToOfferDto(user.getOfferings(),false);
+        List<OfferDto> ownedOffers = EntityToDtoMapper.OfferToOfferDto(user.getSubscriptions(),false);
         List<OfferDto> offers = new ArrayList<>(ownedOffers);
         offers.addAll(subscribedOffers);
         return offers;
