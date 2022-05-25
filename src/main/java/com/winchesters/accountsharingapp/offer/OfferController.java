@@ -66,5 +66,10 @@ public class OfferController {
         offerService.removeSubscriber(offerId,username);
     }
 
+    @GetMapping("{offerId}/unsubscribe")
+    public void unsubscribe(@PathVariable Long offerId){
+        offerService.unsubscribe(offerId);
+    }
+
 
 }

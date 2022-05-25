@@ -122,4 +122,11 @@ public class OfferService implements OfferServiceInterface {
         Offer offer = getOfferById(offerId);
         offer.removeSplitter(username);
     }
+
+    public void unsubscribe(Long offerId) {
+        String  username = userService.getUser().getUsername();
+        Offer offer = getOfferById(offerId);
+
+        offer.removeSplitter(username);
+    }
 }
