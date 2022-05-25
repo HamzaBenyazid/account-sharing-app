@@ -61,5 +61,10 @@ public class OfferController {
         return offerService.listOfferSubscribers(offerId);
     }
 
+    @DeleteMapping("{offerId}/remove-subscriber")
+    public void removeSubscriber(@PathVariable Long offerId,@RequestBody String username){
+        offerService.removeSubscriber(offerId,username);
+    }
+
 
 }

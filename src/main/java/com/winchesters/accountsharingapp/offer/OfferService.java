@@ -117,4 +117,9 @@ public class OfferService implements OfferServiceInterface {
     public List<String> listOfferSubscribers(Long offerId) {
         return this.getOfferById(offerId).getSplitters().stream().map(User::getUsername).toList();
     }
+
+    public void removeSubscriber(Long offerId,String username) {
+        Offer offer = getOfferById(offerId);
+        offer.removeSplitter(username);
+    }
 }

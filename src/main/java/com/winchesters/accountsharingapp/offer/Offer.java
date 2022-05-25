@@ -45,4 +45,8 @@ public class Offer {
     @OneToMany(mappedBy="offer", fetch = FetchType.LAZY)
     private List<Request> requests= new ArrayList<>();;
 
+    public void removeSplitter(String splitterUsername){
+        this.setSplitters(this.getSplitters().stream().filter((splitter)->!splitter.getUsername().equals(splitterUsername)).toList());
+    }
+
 }
