@@ -19,8 +19,8 @@ public class OfferResponseDto {
     private Double calculatedPrice;
     private Integer maxSplitters;
     private Boolean isPublic;
-    private Account account;
-    private User offerer;
+    private Long accountId;
+    private String offerer;
     private List<String> splitterUsernames;
-    private List<Request> requests;
+    private Integer numberOfRequests;
 }

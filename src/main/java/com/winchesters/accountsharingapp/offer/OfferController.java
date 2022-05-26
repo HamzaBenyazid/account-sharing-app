@@ -2,6 +2,7 @@ package com.winchesters.accountsharingapp.offer;
 
 
 import com.winchesters.accountsharingapp.account.AccountProvider;
+import com.winchesters.accountsharingapp.dto.CreateOfferDto;
 import com.winchesters.accountsharingapp.dto.OfferResponseDto;
 import com.winchesters.accountsharingapp.mapper.EntityToDtoMapper;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path = "api/offer")
+@RequestMapping(path = "api/v1/offer")
 @RequiredArgsConstructor
 public class OfferController {
     //private static final Logger LOG = LoggerFactory.getLogger(OfferController.class);
@@ -22,34 +23,53 @@ public class OfferController {
     private final OfferService offerService;
     private final int pageSize=16;
 
-    @PostMapping("/create")
+    @PostMapping("")
     @ResponseStatus( HttpStatus.CREATED )
-    private void connect(@Valid @RequestBody Offer offer) {
-        offerService.createOffer(offer);
+    private OfferResponseDto createOffer(@Valid @RequestBody CreateOfferDto offer) {
+        return  offerService.createOffer(offer);
     }
 
-    @GetMapping("/offers")
-    public List<Offer> listOffers(@RequestParam Integer pageNumber,@RequestParam Double price,@RequestParam AccountProvider accountProvider){
+    @GetMapping("")
+    public List<Offer> filterOffers(@RequestParam Integer pageNumber,@RequestParam Double price,@RequestParam AccountProvider accountProvider){
        return  offerService.getByCalculatedPriceAndAccount_Provider(price,accountProvider,pageNumber,pageSize).stream().collect(Collectors.toList());
     }
 
-    @GetMapping("/offers/{offerId}")
+    @GetMapping("/all")
+    public List<OfferResponseDto> listOffers(){
+        return  offerService.listOffers();
+    }
+
+    @GetMapping("/{offerId}")
     public @ResponseBody OfferResponseDto getOffer(@PathVariable("offerId") Long offerId){
         return  EntityToDtoMapper.offerToOfferResponseDto(offerService.getOfferById(offerId));
     }
 
-    @DeleteMapping("/offers/{offerId}")
+    @DeleteMapping("/{offerId}")
     public void deleteOffer(@PathVariable("offerId") Long offerId){
         offerService.deteteOffer(offerId);
     }
 
 
 
-    @PutMapping("offers/{offerId}")
+    @PutMapping("/{offerId}")
     public OfferResponseDto updateImage(@PathVariable Long offerId,Integer maxSplitters){
         return offerService.updateMaxSplitters(offerId,maxSplitters);
     }
 
+    @GetMapping("{offerId}/subscribers")
+    public List<String> listOfferSubscribers(@PathVariable Long offerId){
+        return offerService.listOfferSubscribers(offerId);
+    }
+
+    @DeleteMapping("{offerId}/remove-subscriber")
+    public void removeSubscriber(@PathVariable Long offerId,@RequestBody String username){
+        offerService.removeSubscriber(offerId,username);
+    }
+
+    @GetMapping("{offerId}/unsubscribe")
+    public void unsubscribe(@PathVariable Long offerId){
+        offerService.unsubscribe(offerId);
+    }
 
 
 }

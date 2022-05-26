@@ -1,12 +1,15 @@
 package com.winchesters.accountsharingapp.offer;
 
 import com.winchesters.accountsharingapp.account.AccountProvider;
+import com.winchesters.accountsharingapp.account.AccountService;
 import com.winchesters.accountsharingapp.auth.AuthenticationFacade;
+import com.winchesters.accountsharingapp.dto.CreateOfferDto;
 import com.winchesters.accountsharingapp.dto.OfferResponseDto;
 import com.winchesters.accountsharingapp.exception.offer.InvalidMaxSplitterValue;
 import com.winchesters.accountsharingapp.exception.offer.OfferNotEmptyException;
 import com.winchesters.accountsharingapp.exception.offer.OfferNotFoundException;
 import com.winchesters.accountsharingapp.mapper.EntityToDtoMapper;
+import com.winchesters.accountsharingapp.user.User;
 import com.winchesters.accountsharingapp.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,23 +19,32 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class OfferService implements OfferServiceInterface {
     // private static final Logger LOG = LoggerFactory.getLogger(OfferService.class);
     private final OfferRepository offerRepository;
+    private final AccountService accountService;
     private final UserService userService;
     private final AuthenticationFacade authenticationFacade;
 
     @Override
-    public void createOffer(Offer offer) {
-        java.sql.Date date = new java.sql.Date(new java.util.Date().getTime());
-        Double calculatedPrice = offer.getAccount().getSubscription().getPrice() /offer.getMaxSplitters();
-        offer.setCalculatedPrice(calculatedPrice);
+    public OfferResponseDto createOffer(CreateOfferDto dto) {
+        Offer offer = new Offer();
         offer.setOfferer(userService.getUser());
+        offer.setAccount(accountService.findAccountById(dto.accountId()));
+        offer.setMaxSplitters(dto.maxSplitters());
+        offer.setCalculatedPrice(offer.getAccount().getSubscription().getPrice() /dto.maxSplitters());
+
+        Date date = new Date(new Date().getTime());
         offer.setUploadDate(date);
-        offerRepository.save(offer);
+
+        offer = offerRepository.save(offer);
+        return EntityToDtoMapper.offerToOfferResponseDto(offer);
     }
 
     @Override
@@ -97,4 +109,24 @@ public class OfferService implements OfferServiceInterface {
     }
 
 
+    public List<OfferResponseDto> listOffers() {
+        return EntityToDtoMapper.offerToOfferResponseDto(offerRepository.findAll());
+
+    }
+
+    public List<String> listOfferSubscribers(Long offerId) {
+        return this.getOfferById(offerId).getSplitters().stream().map(User::getUsername).toList();
+    }
+
+    public void removeSubscriber(Long offerId,String username) {
+        Offer offer = getOfferById(offerId);
+        offer.removeSplitter(username);
+    }
+
+    public void unsubscribe(Long offerId) {
+        String  username = userService.getUser().getUsername();
+        Offer offer = getOfferById(offerId);
+
+        offer.removeSplitter(username);
+    }
 }
