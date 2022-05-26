@@ -20,7 +20,7 @@ NetflixAccount extends AbstractAccount:
 interface subsciption_type:
   - protected Service service;  // netflix,spotify...
   - getPrice();
-  - getMaxUsers();
+  - getMaxSplitters();
  # - getCredentialsObject();
 
 NetflixSubsciption implements subsciption_type:

@@ -14,5 +14,15 @@
       "name": "jwt.tokenExpirationAfterDays",
       "type": "java.lang.String",
       "description": "token expiration date (days)."
+    },
+    {
+      "name": "stripe_publishable_key",
+      "type": "java.lang.String",
+      "description": "Description for stripe_publishable_key."
+    },
+    {
+      "name": "stripe_secret_key",
+      "type": "java.lang.String",
+      "description": "Description for stripe_secret_key."
     }
   ] }

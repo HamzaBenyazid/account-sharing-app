@@ -16,6 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class Request {
     @Id
+    @Column(name = "request_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

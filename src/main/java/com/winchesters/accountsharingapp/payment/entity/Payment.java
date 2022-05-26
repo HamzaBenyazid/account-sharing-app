@@ -1,4 +1,4 @@
-package com.winchesters.accountsharingapp.payment;
+package com.winchesters.accountsharingapp.payment.entity;
 
 
 import com.winchesters.accountsharingapp.request.Request;
@@ -18,6 +18,7 @@ import java.util.Date;
 public class Payment {
 
     @Id
+    @Column(name = "payment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Double total;
