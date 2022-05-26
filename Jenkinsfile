@@ -14,17 +14,17 @@ pipeline{
                 }
             }
         }
-//         stage("increment version"){
-//             steps{
-//                 script{
-//                     echo "incrementing project version"
-//                     sh 'mvn build-helper:parse-version versions:set -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} versions:commit'
-//                     version = readMavenPom().getVersion()
-//                     env.IMAGE_TAG = "$version-$BUILD_NUMBER"
-//                     echo "the new version is : ${version}"
-//                 }
-//             }
-//         }
+        stage("increment version"){
+            steps{
+                script{
+                    echo "incrementing project version"
+                    sh 'mvn build-helper:parse-version versions:set -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} versions:commit'
+                    version = readMavenPom().getVersion()
+                    env.IMAGE_TAG = "$version-$BUILD_NUMBER"
+                    echo "the new version is : ${version}"
+                }
+            }
+        }
         stage("build docker-image"){
             steps{
               script{
