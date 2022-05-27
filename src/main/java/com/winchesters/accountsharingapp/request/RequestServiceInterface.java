@@ -5,7 +5,7 @@ import java.util.List;
 public interface RequestServiceInterface {
 
     void createRequest(Long offerId);
-    Request findRequestById(Long id);
+    public Request findRequestById(Long id);
     List<Request> getRequestsToUser();
     void deleteRequest(Long requestId);
     List<Request> getRequestsForOffer(Long offerId);

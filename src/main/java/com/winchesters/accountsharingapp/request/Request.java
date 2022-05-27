@@ -3,9 +3,7 @@ package com.winchesters.accountsharingapp.request;
 import com.winchesters.accountsharingapp.offer.Offer;
 import com.winchesters.accountsharingapp.user.User;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,6 +12,7 @@ import java.util.Date;
 @Table
 @Setter
 @Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Request {
@@ -34,4 +33,5 @@ public class Request {
 
     @ManyToOne
     private Offer offer;
+
 }
