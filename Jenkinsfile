@@ -14,35 +14,34 @@ pipeline{
                 }
             }
         }
-//         stage("increment version"){
-//             steps{
-//                 script{
-//                     echo "incrementing project version"
-//                     sh 'mvn build-helper:parse-version versions:set -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} versions:commit'
-//                     version = readMavenPom().getVersion()
-//                     env.IMAGE_TAG = "$version-$BUILD_NUMBER"
-//                     echo "the new version is : ${version}"
-//                 }
-//             }
-//         }
+        stage("increment version"){
+            steps{
+                script{
+                    echo "incrementing project version"
+                    sh 'mvn build-helper:parse-version versions:set -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} versions:commit'
+                    version = readMavenPom().getVersion()
+                    env.IMAGE_TAG = "$version-$BUILD_NUMBER"
+                    echo "the new version is : ${version}"
+                }
+            }
+        }
         stage("build docker-image"){
             steps{
               script{
                 // test are included here
-                  echo "building the docker image"
+                  echo "building the docker image ${IMAGE_TAG}"
                   gv.buildImage()
               }
             }
 
         }
-// //          stage("push docker-image"){
-// //             steps{
-// //               script{
-// //                   gv.pushImage()
-// //               }
-// //             }
-// //
-// //         }
+         stage("push docker-image"){
+            steps{
+              script{
+                  gv.pushImage()
+              }
+            }
+        }
 // //         stage("deploy"){
 // //             // docker login is already done in ec2
 // //             steps{
@@ -55,13 +54,12 @@ pipeline{
 // //             }
 // //
 // //         }
-// //         stage("commiting new version"){
-// //             steps{
-// //                 script{
-// //                     gv.commitVersion()
-// //                 }
-// //             }
-// //         }
-
+        stage("commiting new version"){
+            steps{
+                script{
+                    gv.commitVersion()
+                }
+            }
+        }
     }
 }
