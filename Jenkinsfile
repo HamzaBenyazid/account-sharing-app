@@ -29,7 +29,7 @@ pipeline{
             steps{
               script{
                 // test are included here
-                  echo "building the docker image"
+                  echo "building the docker image ${ULA}"
                   gv.buildImage()
               }
             }
