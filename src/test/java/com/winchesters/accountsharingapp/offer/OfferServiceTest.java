@@ -9,6 +9,7 @@ import com.winchesters.accountsharingapp.dto.CreateOfferDto;
 import com.winchesters.accountsharingapp.dto.OfferResponseDto;
 import com.winchesters.accountsharingapp.exception.offer.OfferNotEmptyException;
 import com.winchesters.accountsharingapp.mapper.EntityToDtoMapper;
+import com.winchesters.accountsharingapp.request.Request;
 import com.winchesters.accountsharingapp.subscription.Subscription;
 import com.winchesters.accountsharingapp.subscription.SubscriptionFactory;
 import com.winchesters.accountsharingapp.subscription.SubscriptionService;
@@ -25,6 +26,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -117,16 +119,19 @@ private ArgumentCaptor<Offer> offerArgumentCaptor;
         Account account = new FakeAccount();
         account.setSubscription(subscription);
         User user = new User(1L,"meriem","ouaziz","meriem@gmail.com","meriem","meriem",true,null,null,null,null,null,null,null);
-        Offer offer=new Offer(123L,null,null,3,true,null,user,Stream.of(user,user).collect(Collectors.toList()), null);
+        Offer offer=new Offer(123L,null,null,3,true,null,user,Stream.of(user,user).collect(Collectors.toList()), List.of(new Request(),new Request()));
         offer.setAccount(account);
+        OfferResponseDto offerResponseDto = EntityToDtoMapper.offerToOfferResponseDto(offer);
        //when
-        Mockito.when(offerRepository.findById(123L)).thenReturn(Optional.of(offer));
+        try (MockedStatic<EntityToDtoMapper> entityToDtoMapperMockedStatic =Mockito.mockStatic(EntityToDtoMapper.class)) {
+            entityToDtoMapperMockedStatic.when(() -> EntityToDtoMapper.offerToOfferResponseDto(Mockito.any(Offer.class))).thenReturn(offerResponseDto);
+            Mockito.when(offerRepository.findById(123L)).thenReturn(Optional.of(offer));
         Mockito.when(authenticationFacade.getAuthenticatedUsername()).thenReturn(user.getUsername());
         offerService.updateMaxSplitters(123L,5);
         //then
         Mockito.verify(offerRepository,Mockito.times(1)).save(ArgumentMatchers.any(Offer.class));
 
-    }
+    }}
 
     @Test
     @DisplayName("Should get all offers")
@@ -138,7 +143,7 @@ private ArgumentCaptor<Offer> offerArgumentCaptor;
         Page<Offer> actualOffersReturned=offerService.getOffers(null,4);
         //then
         Assertions.assertEquals(2L,actualOffersReturned.getTotalElements());
-        Assertions.assertEquals(actualOffersReturned.stream().collect(Collectors.toList()).get(1).getId(),123L );
+        Assertions.assertEquals(123L,actualOffersReturned.stream().collect(Collectors.toList()).get(1).getId());
 
     }
 

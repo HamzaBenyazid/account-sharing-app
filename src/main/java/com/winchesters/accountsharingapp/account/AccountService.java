@@ -53,6 +53,7 @@ public class AccountService {
     public void updateCredentials(Long accountId,Credentials credentials){
         Account account = findAccountById(accountId);
         account.setCredentials(credentials);
+        accountRepository.save(account);
     }
 
 }
