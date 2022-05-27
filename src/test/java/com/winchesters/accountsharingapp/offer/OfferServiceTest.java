@@ -138,7 +138,7 @@ private ArgumentCaptor<Offer> offerArgumentCaptor;
         Page<Offer> actualOffersReturned=offerService.getOffers(null,4);
         //then
         Assertions.assertEquals(2L,actualOffersReturned.getTotalElements());
-        Assertions.assertEquals(actualOffersReturned.stream().collect(Collectors.toList()).get(1).getId(),123L );
+        Assertions.assertEquals(123L,actualOffersReturned.stream().collect(Collectors.toList()).get(1).getId());
 
     }
 

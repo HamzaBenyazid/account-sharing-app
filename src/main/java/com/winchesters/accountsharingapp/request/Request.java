@@ -2,6 +2,7 @@ package com.winchesters.accountsharingapp.request;
 
 import com.winchesters.accountsharingapp.offer.Offer;
 import com.winchesters.accountsharingapp.user.User;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.util.Date;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Request {
     @Id
     @Column(name = "request_id")
