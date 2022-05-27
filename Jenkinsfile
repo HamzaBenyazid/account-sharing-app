@@ -54,13 +54,13 @@ pipeline{
 // //             }
 // //
 // //         }
-// //         stage("commiting new version"){
-// //             steps{
-// //                 script{
-// //                     gv.commitVersion()
-// //                 }
-// //             }
-// //         }
+//         stage("commiting new version"){
+//             steps{
+//                 script{
+//                     gv.commitVersion()
+//                 }
+//             }
+//         }
 
     }
 }

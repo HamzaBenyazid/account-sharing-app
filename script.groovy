@@ -14,10 +14,10 @@ def pushImage(){
     }
 }
 def commitVersion(){
-    withCredentials([usernamePassword(credentialsId: 'gitlab', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]){
+    withCredentials([usernamePassword(credentialsId: 'githubWithToken', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]){
         sh "git config user.name 'jenkins'"
         sh "git config user.email 'jenkins@oubaydos.com'"
-        sh "git remote set-url origin https://${USERNAME}:${PASSWORD}@github.com/Coaching-Website-Team/Coaching-Website"
+        sh "git remote set-url origin https://github.com/HamzaBenyazid/account-sharing-app"
         sh "git add . "
         sh "git commit -m 'update version'"
         sh "git push origin HEAD:master"
