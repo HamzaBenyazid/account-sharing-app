@@ -35,14 +35,13 @@ pipeline{
             }
 
         }
-// //          stage("push docker-image"){
-// //             steps{
-// //               script{
-// //                   gv.pushImage()
-// //               }
-// //             }
-// //
-// //         }
+         stage("push docker-image"){
+            steps{
+              script{
+                  gv.pushImage()
+              }
+            }
+        }
 // //         stage("deploy"){
 // //             // docker login is already done in ec2
 // //             steps{
