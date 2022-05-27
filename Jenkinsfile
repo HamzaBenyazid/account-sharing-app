@@ -33,7 +33,6 @@ pipeline{
                   gv.buildImage()
               }
             }
-
         }
          stage("push docker-image"){
             steps{
