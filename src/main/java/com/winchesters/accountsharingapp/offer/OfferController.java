@@ -29,7 +29,7 @@ public class OfferController {
         return  offerService.createOffer(offer);
     }
 
-    @GetMapping("")
+    @GetMapping
     public List<Offer> filterOffers(@RequestParam Integer pageNumber,@RequestParam Double price,@RequestParam AccountProvider accountProvider){
        return  offerService.getByCalculatedPriceAndAccount_Provider(price,accountProvider,pageNumber,pageSize).stream().collect(Collectors.toList());
     }

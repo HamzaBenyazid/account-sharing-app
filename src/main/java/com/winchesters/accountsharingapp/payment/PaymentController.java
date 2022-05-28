@@ -11,10 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(path = "api/payment")
+@RequestMapping(path = "api/v1/payment")
 public class PaymentController implements IPaymentController{
     private static final Logger Log = LoggerFactory.getLogger(PaymentController.class);
     private final PaymentService paymentService;
@@ -29,7 +30,7 @@ return paymentService.test("oubauda56@gma.com","token",100);
 
     @PostMapping(value = "/checkout",consumes = "application/json")
     @ResponseStatus( HttpStatus.OK )
-    public void checkout(@RequestBody ChargeRequest chargeRequest) throws StripeException {
+    public void checkout(@Valid @RequestBody ChargeRequest chargeRequest) throws StripeException {
          paymentService.checkout(chargeRequest);
     }
 
