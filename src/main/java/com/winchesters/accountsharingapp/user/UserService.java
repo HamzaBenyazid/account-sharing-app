@@ -76,11 +76,12 @@ public class UserService {
 
         return EntityToDtoMapper.userToUserResponseDto(userRepository.save(user));
     }
-    @Transactional
+
     public void updateEmail(Long userId, String email) {
         User user = userRepository.findById(userId)
                 .orElseThrow(()->new IllegalStateException(String.format("user with id %d not found",userId)));
         user.setEmail(email);
+        userRepository.save(user);
     }
 
     public Map<String,String> getAuthenticatedUser() {
@@ -112,4 +113,5 @@ public class UserService {
         offers.addAll(subscribedOffers);
         return offers;
     }
+
 }

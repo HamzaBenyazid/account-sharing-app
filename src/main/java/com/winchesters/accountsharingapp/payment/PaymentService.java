@@ -25,16 +25,26 @@ import java.util.Map;
 @Transactional
 public class PaymentService {
     private static final Logger Log = LoggerFactory.getLogger(PaymentService.class);
+
     @Value("${stripe_publishable_key}")
     private String stripePublicKey;
     @Value("${stripe_secret_key}")
     private String secretKey;
 
+    /**
+     * initializes stripe with the secret key found in application.proprieties
+     */
     @PostConstruct
     public void init() {
         Stripe.apiKey = secretKey;
     }
 
+    /**
+     * create a Stripe charge from a chargeRequest
+     * @param chargeRequest our models request
+     * @return a Stripe Charge
+     * @throws StripeException if any problem found in stripe
+     */
     public Charge checkout(ChargeRequest chargeRequest) throws StripeException {
         Map<String,Object> chargeParameters = Map.of(
                 "currency",chargeRequest.getCurrency(),
@@ -45,6 +55,15 @@ public class PaymentService {
         );
         return Charge.create(chargeParameters);
     }
+
+    /**
+     * charges a customer
+     * @param email the customer's email
+     * @param token the token returned by stripe to the front end
+     * @param amount the amount of the transaction
+     * @return the charge id
+     * @throws StripeException if any stripe problem found
+     */
     public String createCharge(String email, String token, int amount) throws StripeException {
 
         String chargeId = null;

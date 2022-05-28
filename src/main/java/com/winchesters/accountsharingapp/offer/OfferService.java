@@ -74,7 +74,7 @@ public class OfferService implements OfferServiceInterface {
     public OfferResponseDto updateMaxSplitters(Long offerId, Integer maxSplitters) {
         Offer offer = offerRepository.findById(offerId)
                 .orElseThrow(() -> new IllegalStateException("offer with id : "+offerId+" not found"));
-        if(offer.getAccount().getSubscription().getMaxUsers()>= maxSplitters || offer.getSplitters().size()> maxSplitters) {
+        if(offer.getAccount().getSubscription().getMaxUsers() < maxSplitters || offer.getSplitters().size()> maxSplitters) {
             throw new InvalidMaxSplitterValue("Invalid maximum number of splitters");
         }
         String username = authenticationFacade.getAuthenticatedUsername();

@@ -3,6 +3,8 @@ package com.winchesters.accountsharingapp.account;
 import com.winchesters.accountsharingapp.dto.AccountResponseDto;
 import com.winchesters.accountsharingapp.dto.CreateAccountDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,8 +16,11 @@ public class AccountController {
     private final AccountService accountService;
 
     @PostMapping()
-    public void createAccount(@RequestBody CreateAccountDto accountDto){
-        accountService.createAccount(accountDto);
+    public ResponseEntity<Long> createAccount(@RequestBody CreateAccountDto accountDto){
+        return new ResponseEntity<>(
+                accountService.createAccount(accountDto).getId(),
+                HttpStatus.CREATED
+        );
     }
 
     @DeleteMapping("{accountId}")

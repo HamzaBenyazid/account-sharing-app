@@ -1,9 +1,10 @@
 package com.winchesters.accountsharingapp.dto;
 
+import com.winchesters.accountsharingapp.account.AccountProvider;
 import com.winchesters.accountsharingapp.account.Credentials;
 
 public record CreateAccountDto(
-        String provider,
+        AccountProvider provider,
         String subscriptionType,
         Credentials credentials) {
 }

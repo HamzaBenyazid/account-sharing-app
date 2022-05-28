@@ -23,7 +23,7 @@ public class OfferController {
     private final OfferService offerService;
 
 
-    @PostMapping("")
+    @PostMapping(value = "",consumes = "application/json")
     @ResponseStatus( HttpStatus.CREATED )
     private OfferResponseDto createOffer(@Valid @RequestBody CreateOfferDto offer) {
         return  offerService.createOffer(offer);
