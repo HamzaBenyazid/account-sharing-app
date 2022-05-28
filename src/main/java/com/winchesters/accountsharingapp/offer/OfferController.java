@@ -23,7 +23,7 @@ public class OfferController {
     private final OfferService offerService;
     private final int pageSize=16;
 
-    @PostMapping("")
+    @PostMapping(value = "",consumes = "application/json")
     @ResponseStatus( HttpStatus.CREATED )
     private OfferResponseDto createOffer(@Valid @RequestBody CreateOfferDto offer) {
         return  offerService.createOffer(offer);
