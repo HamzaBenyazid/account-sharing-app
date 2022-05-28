@@ -21,7 +21,7 @@ public class OfferController {
     //private static final Logger LOG = LoggerFactory.getLogger(OfferController.class);
     @Autowired
     private final OfferService offerService;
-    private final int pageSize=16;
+
 
     @PostMapping("")
     @ResponseStatus( HttpStatus.CREATED )
@@ -30,8 +30,10 @@ public class OfferController {
     }
 
     @GetMapping("")
-    public List<Offer> filterOffers(@RequestParam Integer pageNumber,@RequestParam Double price,@RequestParam AccountProvider accountProvider){
-       return  offerService.getByCalculatedPriceAndAccount_Provider(price,accountProvider,pageNumber,pageSize).stream().collect(Collectors.toList());
+    public List<OfferResponseDto> filterOffers(@RequestParam(required = false) Integer pageNumber,
+                                    @RequestParam(required = false)  Double price,
+                                    @RequestParam AccountProvider accountProvider){
+       return  offerService.filterOffers(pageNumber,price,accountProvider);
     }
 
     @GetMapping("/all")

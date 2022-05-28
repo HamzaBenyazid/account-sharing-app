@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -31,6 +32,7 @@ public class OfferService implements OfferServiceInterface {
     private final AccountService accountService;
     private final UserService userService;
     private final AuthenticationFacade authenticationFacade;
+    private final int pageSize=16;
 
     @Override
     public OfferResponseDto createOffer(CreateOfferDto dto) {
@@ -128,5 +130,9 @@ public class OfferService implements OfferServiceInterface {
         Offer offer = getOfferById(offerId);
 
         offer.removeSplitter(username);
+    }
+
+    public List<OfferResponseDto> filterOffers(Integer pageNumber, Double price, AccountProvider accountProvider) {
+        return EntityToDtoMapper.offerToOfferResponseDto(getByCalculatedPriceAndAccount_Provider(price,accountProvider,pageNumber,pageSize).stream().toList());
     }
 }
