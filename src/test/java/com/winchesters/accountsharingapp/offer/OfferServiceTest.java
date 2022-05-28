@@ -5,6 +5,7 @@ import com.winchesters.accountsharingapp.account.AccountRepository;
 import com.winchesters.accountsharingapp.account.AccountService;
 import com.winchesters.accountsharingapp.account.FakeAccount;
 import com.winchesters.accountsharingapp.auth.AuthenticationFacade;
+import com.winchesters.accountsharingapp.dto.AccountResponseDto;
 import com.winchesters.accountsharingapp.dto.CreateOfferDto;
 import com.winchesters.accountsharingapp.dto.OfferResponseDto;
 import com.winchesters.accountsharingapp.exception.offer.OfferNotEmptyException;
@@ -84,7 +85,7 @@ private ArgumentCaptor<Offer> offerArgumentCaptor;
 
         CreateOfferDto dto = new CreateOfferDto(1L,3);
 
-        OfferResponseDto offerResponseDto = new OfferResponseDto(1L,null,100.0,4,true,null,"meriem",null,4);
+        OfferResponseDto offerResponseDto = new OfferResponseDto(1L,null,100.0,4,true,null,"meriem",null,4,EntityToDtoMapper.accountToAccountResponseDto(account));
         //when
         try (MockedStatic<EntityToDtoMapper> entityToDtoMapperMockedStatic =Mockito.mockStatic(EntityToDtoMapper.class)){
             entityToDtoMapperMockedStatic.when(()->EntityToDtoMapper.offerToOfferResponseDto(Mockito.any(Offer.class))).thenReturn(offerResponseDto);

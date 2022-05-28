@@ -33,6 +33,7 @@ public class EntityToDtoMapper {
         offerResponseDto.setNumberOfRequests(offer.getRequests().size());
         offerResponseDto.setMaxSplitters(offer.getMaxSplitters());
         offerResponseDto.setSplitterUsernames(offer.getSplitters().stream().map(User::getUsername).collect(Collectors.toList()));
+        offerResponseDto.setAccount(EntityToDtoMapper.accountToAccountResponseDto(offer.getAccount()));
         return offerResponseDto;
     }
 
@@ -49,7 +50,8 @@ public class EntityToDtoMapper {
                 account.getId(),
                 account.getProvider().name(),
                 account.getSubscriptionType(),
-                account.getOwner().getUsername()
+                account.getOwner().getUsername(),
+                account.getCredentials()
         );
     }
 

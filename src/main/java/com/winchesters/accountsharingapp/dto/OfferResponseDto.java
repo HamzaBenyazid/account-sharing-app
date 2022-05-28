@@ -23,4 +23,5 @@ public class OfferResponseDto {
     private String offerer;
     private List<String> splitterUsernames;
     private Integer numberOfRequests;
+    private AccountResponseDto account;
 }

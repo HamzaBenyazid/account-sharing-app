@@ -29,7 +29,7 @@ public class OfferController {
         return  offerService.createOffer(offer);
     }
 
-    @GetMapping("")
+    @GetMapping
     public List<OfferResponseDto> filterOffers(@RequestParam(required = false) Integer pageNumber,
                                     @RequestParam(required = false)  Double price,
                                     @RequestParam AccountProvider accountProvider){
