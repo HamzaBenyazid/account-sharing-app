@@ -18,6 +18,7 @@ import com.winchesters.accountsharingapp.subscription.fake.FakeSubscription;
 import com.winchesters.accountsharingapp.user.User;
 import com.winchesters.accountsharingapp.user.UserService;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -75,6 +76,7 @@ private ArgumentCaptor<Offer> offerArgumentCaptor;
 
     @Test
     @DisplayName("Should save offer")
+
     void shouldSaveOffer() {
         //given
         Account account = new FakeAccount();
@@ -85,7 +87,7 @@ private ArgumentCaptor<Offer> offerArgumentCaptor;
 
         CreateOfferDto dto = new CreateOfferDto(1L,3);
 
-        OfferResponseDto offerResponseDto = new OfferResponseDto(1L,null,100.0,4,true,null,"meriem",null,4,EntityToDtoMapper.accountToAccountResponseDto(account));
+        OfferResponseDto offerResponseDto = new OfferResponseDto(1L,null,100.0,4,true,null,"meriem",null,4,null);
         //when
         try (MockedStatic<EntityToDtoMapper> entityToDtoMapperMockedStatic =Mockito.mockStatic(EntityToDtoMapper.class)){
             entityToDtoMapperMockedStatic.when(()->EntityToDtoMapper.offerToOfferResponseDto(Mockito.any(Offer.class))).thenReturn(offerResponseDto);
@@ -114,6 +116,7 @@ private ArgumentCaptor<Offer> offerArgumentCaptor;
 
     @Test
     @DisplayName("should update max splitters if valid")
+
     void shouldUpdateMaxSplitters() {
         //given
         Subscription subscription = new FakeSubscription();
@@ -122,7 +125,8 @@ private ArgumentCaptor<Offer> offerArgumentCaptor;
         User user = new User(1L,"meriem","ouaziz","meriem@gmail.com","meriem","meriem",true,null,null,null,null,null,null,null);
         Offer offer=new Offer(123L,null,null,3,true,null,user,Stream.of(user,user).collect(Collectors.toList()), List.of(new Request(),new Request()));
         offer.setAccount(account);
-        OfferResponseDto offerResponseDto = EntityToDtoMapper.offerToOfferResponseDto(offer);
+       // OfferResponseDto offerResponseDto = EntityToDtoMapper.offerToOfferResponseDto(offer);
+        OfferResponseDto offerResponseDto = new OfferResponseDto(1L,null,100D,4,true,1L,"hamza",List.of("hamza","hamza"),2,null);
        //when
         try (MockedStatic<EntityToDtoMapper> entityToDtoMapperMockedStatic =Mockito.mockStatic(EntityToDtoMapper.class)) {
             entityToDtoMapperMockedStatic.when(() -> EntityToDtoMapper.offerToOfferResponseDto(Mockito.any(Offer.class))).thenReturn(offerResponseDto);
