@@ -22,30 +22,33 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class AccountServiceTest {
     @Mock
-    private  AccountRepository accountRepository;
+    private AccountRepository accountRepository;
     @Mock
-    private  SubscriptionService subscriptionService;
+    private SubscriptionService subscriptionService;
     @Mock
-    private  UserService userService;
+    private UserService userService;
     @InjectMocks
     private AccountService accountService;
     @Captor
-    private  ArgumentCaptor<Account> accountArgumentCaptor;
+    private ArgumentCaptor<Account> accountArgumentCaptor;
 
     @Test
     @DisplayName("Should create Account")
     void shouldCreateAccount() {
         //given
-        CreateAccountDto dto = new CreateAccountDto("NETFLIX","PREMIUM",null);
+        CreateAccountDto dto = new CreateAccountDto(AccountProvider.NETFLIX, "PREMIUM", null);
         Account account = new FakeAccount();
         account.setId(1L);
         //when
-        try (MockedStatic<AccountFactory> accountFactoryMockedStatic = Mockito.mockStatic(AccountFactory.class)){
-            accountFactoryMockedStatic.when(()->AccountFactory.createAccount(Mockito.anyString())).thenReturn(account);
+        try (MockedStatic<AccountFactory> accountFactoryMockedStatic = Mockito.mockStatic(AccountFactory.class)) {
+            accountFactoryMockedStatic.when(
+                            () -> AccountFactory.createAccount(Mockito.any())
+                    )
+                    .thenReturn(account);
             accountService.createAccount(dto);
             //then
-            Mockito.verify(accountRepository,Mockito.times(1)).save(accountArgumentCaptor.capture());
-            Assertions.assertEquals(1L,accountArgumentCaptor.getValue().getId());
+            Mockito.verify(accountRepository, Mockito.times(1)).save(accountArgumentCaptor.capture());
+            Assertions.assertEquals(1L, accountArgumentCaptor.getValue().getId());
         }
-}
+    }
 }

@@ -39,6 +39,7 @@ public class AccountService {
         Account account = AccountFactory.createAccount(dto.provider());
         account.setSubscriptionType(dto.subscriptionType());
         account.setOwner(userService.getUser());
+        account.setCredentials(dto.credentials());
         return accountRepository.save(account);
     }
 
