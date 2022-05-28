@@ -4,6 +4,6 @@ public class NetflixStandardSubscription extends NetflixSubscription {
 
 
     public NetflixStandardSubscription() {
-        super(true, false, 2, 130D);
+        super(true, false, 2, 13D);
     }
 }
