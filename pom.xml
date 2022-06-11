@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.winchesters</groupId>
     <artifactId>account-sharing-app</artifactId>
-    <version>1.0.38</version>
+    <version>1.0.39</version>
     <name>account-sharing-app</name>
     <description>account-sharing-app</description>
     <properties>
